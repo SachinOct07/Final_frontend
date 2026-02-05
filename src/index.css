@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply font-sans antialiased text-secondary-50 bg-secondary-950;
+    }
+}
+
+@layer components {
+    .input-field {
+        @apply w-full px-4 py-2 rounded-lg border border-secondary-600 bg-secondary-900 text-white placeholder-secondary-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all disabled:opacity-50 disabled:bg-secondary-800;
+    }
+
+    .btn-primary {
+        @apply px-6 py-2.5 bg-primary-600 hover:bg-primary-500 text-white font-medium rounded-lg transition-colors shadow-lg shadow-primary-900/20 disabled:opacity-50;
+    }
+
+    .btn-secondary {
+        @apply px-6 py-2.5 bg-secondary-700 hover:bg-secondary-600 text-white font-medium rounded-lg transition-colors;
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
