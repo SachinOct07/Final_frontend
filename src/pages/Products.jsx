@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   useEffect(() => {
     axios.get('/api/products')
@@ -50,7 +51,7 @@ const Products = () => {
                 <div className="relative h-64 overflow-hidden bg-white p-4 flex items-center justify-center">
                   {/* Image handling - using placeholder if image missing */}
                   <img
-                    src={product.image ? `http://localhost:5000/${product.image}` : 'https://via.placeholder.com/400x300?text=No+Image'}
+                    src={product.image ? `${API_URL}/${product.image}` : 'https://via.placeholder.com/400x300?text=No+Image'}
                     alt={product.name}
                     className="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-700"
                     onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/400x300?text=Error'; }}

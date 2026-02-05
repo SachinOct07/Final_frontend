@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 const Projects = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   useEffect(() => {
     axios.get('/api/projects')
@@ -51,7 +52,7 @@ const Projects = () => {
                 <div className="relative h-60 bg-black" onContextMenu={e => e.preventDefault()}>
                   {project.video ? (
                     <ReactPlayer
-                      url={`http://localhost:5000/${project.video}`}
+                      url={`${API_URL}/${project.video}`}
                       controls
                       width="100%"
                       height="100%"

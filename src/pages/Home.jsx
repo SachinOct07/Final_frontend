@@ -6,9 +6,10 @@ const Home = () => {
   const [slides, setSlides] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
   useEffect(() => {
     // Determine the base URL for the API request
-    const baseURL = window.location.hostname === 'localhost' ? '' : 'https://api.smpriyaelectricals.com';
     // In dev, vite proxy handles /api. In prod, we might need a full URL if not handled by same origin.
     // For now assuming the proxy or relative path works. 
     // If the previous code used axios.get('/api/slides'), I'll keep it, 
@@ -52,7 +53,7 @@ const Home = () => {
                       However, I'll use a placeholder if the image fails or if there are no slides 
                   */}
                 <img
-                  src={`http://localhost:5000/${slide.image}`}
+                  src={`${API_URL}/${slide.image}`}
                   alt={slide.text}
                   className="w-full h-full object-cover"
                   onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1558449028-b53a39d100fc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'; }}

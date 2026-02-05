@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 const Schemes = () => {
   const [schemes, setSchemes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   useEffect(() => {
     axios.get('/api/schemes')
@@ -49,7 +50,7 @@ const Schemes = () => {
               <div key={scheme._id} className="bg-secondary-900 rounded-2xl overflow-hidden shadow-lg border border-secondary-800 hover:border-indigo-500/50 hover:shadow-indigo-500/10 transition-all duration-300 flex flex-col group">
                 <div className="relative h-56 overflow-hidden bg-secondary-950">
                   <img
-                    src={scheme.image ? `http://localhost:5000/${scheme.image}` : 'https://via.placeholder.com/400x300'}
+                    src={scheme.image ? `${API_URL}/${scheme.image}` : 'https://via.placeholder.com/400x300'}
                     alt={scheme.title}
                     className="w-full h-full object-cover transition-transform hover:scale-105 duration-500 opacity-90 group-hover:opacity-100"
                     onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/400x300?text=Scheme'; }}
