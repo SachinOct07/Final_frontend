@@ -6,7 +6,7 @@ const Home = () => {
   const [slides, setSlides] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const API_URL = import.meta.env.VITE_API_URL || 'https://final-backend-0e6r.onrender.com';
 
   useEffect(() => {
     // Determine the base URL for the API request

@@ -48,7 +48,7 @@ const AdminDashboard = () => {
   });
 
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const API_URL = import.meta.env.VITE_API_URL || 'https://final-backend-0e6r.onrender.com';
   const token = sessionStorage.getItem('token');
   const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
 
