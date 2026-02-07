@@ -51,7 +51,7 @@ const Products = () => {
                 <div className="relative h-64 overflow-hidden bg-white p-4 flex items-center justify-center">
                   {/* Image handling - using placeholder if image missing */}
                   <img
-                    src={product.image ? `${API_URL}/${product.image.replace(/\\\\/g, '/')}` : 'https://via.placeholder.com/400x300?text=No+Image'}
+                    src={product.image ? (product.image.startsWith('http') ? product.image : `${API_URL}/${product.image.replace(/\\\\/g, '/')}`) : 'https://via.placeholder.com/400x300?text=No+Image'}
                     alt={product.name}
                     className="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-700"
                     onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/400x300?text=Error'; }}
