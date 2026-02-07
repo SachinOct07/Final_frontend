@@ -803,7 +803,7 @@ const AdminDashboard = () => {
                   <div key={s._id} className="bg-secondary-800 rounded-xl shadow-sm border border-secondary-700 overflow-hidden flex flex-col md:flex-row h-auto md:h-48 group hover:shadow-lg transition-all">
                     <div className="w-full md:w-48 bg-secondary-900 relative items-stretch flex">
                       {s.image ? (
-                        <img src={`${API_URL}/${s.image}`} className="w-full h-full object-cover" alt={s.title} />
+                        <img src={`${API_URL}/${s.image.replace(/\\\\/g, '/')}`} className="w-full h-full object-cover" alt={s.title} />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-secondary-600">No Image</div>
                       )}
@@ -843,7 +843,7 @@ const AdminDashboard = () => {
               <div className="grid grid-cols-1 gap-4">
                 {slides.map(s => (
                   <div key={s._id} className="bg-secondary-800 p-4 rounded-xl shadow-sm border border-secondary-700 flex items-center gap-4">
-                    <img src={`${API_URL}/${s.image}`} className="w-24 h-16 object-cover rounded-lg bg-secondary-900" />
+                    <img src={`${API_URL}/${s.image.replace(/\\\\/g, '/')}`} className="w-24 h-16 object-cover rounded-lg bg-secondary-900" />
                     <div className="flex-1">
                       <p className="font-medium text-white">{s.text}</p>
                     </div>

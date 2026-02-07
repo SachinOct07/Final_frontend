@@ -53,7 +53,7 @@ const Home = () => {
                       However, I'll use a placeholder if the image fails or if there are no slides 
                   */}
                 <img
-                  src={`${API_URL}/${slide.image}`}
+                  src={`${API_URL}/${slide.image.replace(/\\\\/g, '/')}`}
                   alt={slide.text}
                   className="w-full h-full object-cover"
                   onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1558449028-b53a39d100fc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'; }}

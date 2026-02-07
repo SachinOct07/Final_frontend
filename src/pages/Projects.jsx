@@ -52,7 +52,7 @@ const Projects = () => {
                 <div className="relative h-60 bg-black" onContextMenu={e => e.preventDefault()}>
                   {project.video ? (
                     <ReactPlayer
-                      url={`${API_URL}/${project.video}`}
+                      url={`${API_URL}/${project.video.replace(/\\\\/g, '/')}`}
                       controls
                       width="100%"
                       height="100%"
