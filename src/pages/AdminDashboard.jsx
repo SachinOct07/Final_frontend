@@ -278,6 +278,7 @@ const AdminDashboard = () => {
                   Add New Product
                 </h3>
                 {success.product && <div className="mb-6 p-4 bg-green-500/10 text-green-400 rounded-xl border border-green-500/20 flex items-center gap-3"><span className="text-xl">✅</span> Product added successfully!</div>}
+                {error.product && <div className="mb-6 p-4 bg-red-500/10 text-red-500 rounded-xl border border-red-500/20 flex items-center gap-3"><span className="text-xl">⚠️</span> {error.product}</div>}
                 <form onSubmit={(e) => { e.preventDefault(); handleCreate('product', productForm, setProductForm, '/api/products', true); }}>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-4">
