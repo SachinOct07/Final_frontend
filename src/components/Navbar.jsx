@@ -47,8 +47,8 @@ const Navbar = () => {
             SM
           </div>
           <div className="flex flex-col">
-            <span className={`font-bold text-xl leading-none ${useTransparentNav ? 'text-white' : 'text-white'}`}>Priya Electricals</span>
-            <span className={`text-xs font-medium tracking-wider ${useTransparentNav ? 'text-emerald-200' : 'text-primary-400'}`}>ENGINEERING EXCELLENCE</span>
+            <span className={`font-bold text-xl leading-none ${useTransparentNav ? 'text-white' : 'text-white'}`}>Priya Electricals Hardwares and Irrigation</span>
+            <span className={`text-xs font-medium tracking-wider ${useTransparentNav ? 'text-emerald-200' : 'text-primary-400'}`}>Expert in Irrigation Ph No: 9819222222</span>
           </div>
         </Link>
 
