@@ -80,24 +80,7 @@ const Home = () => {
             <div className="inline-block px-4 py-1 bg-emerald-500/20 border border-emerald-500/30 backdrop-blur-md rounded-full text-emerald-300 font-medium text-sm tracking-wide mb-4">
               LEADERS IN ELECTRICAL ENGINEERING
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight">
-              Powering Progress <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-emerald-400">
-                With Precision
-              </span>
-            </h1>
-            <p className="text-lg md:text-xl text-secondary-200 max-w-2xl leading-relaxed">
-              S.M. Priya Electricals delivers top-tier electrical products and advanced drip irrigation solutions tailored for efficiency and reliability.
-            </p>
-
-            <div className="flex flex-wrap gap-4 pt-4">
-              <Link to="/products" className="px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-semibold shadow-lg shadow-primary-600/30 transition-all transform hover:-translate-y-1">
-                Explore Products
-              </Link>
-              <Link to="/projects" className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-lg font-semibold backdrop-blur-sm transition-all">
-                View Projects
-              </Link>
-            </div>
+            {/* Removed wording and buttons per user request */}
           </div>
 
           {/* Slide Controls - Positioned absolute bottom right */}
