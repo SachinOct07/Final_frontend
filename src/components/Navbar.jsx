@@ -26,9 +26,9 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
+    { name: 'Products', path: '/products' },
     { name: 'Schemes', path: '/schemes' },
     { name: 'Projects', path: '/projects' },
-    { name: 'Products', path: '/products' },
   ];
 
   // Determine if we should use the transparent/hero style

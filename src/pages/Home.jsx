@@ -77,9 +77,6 @@ const Home = () => {
         {/* Hero Content */}
         <div className="relative h-full container mx-auto px-6 flex flex-col justify-center max-w-7xl pt-20">
           <div className="max-w-3xl space-y-6 animate-fade-in-up">
-            <div className="inline-block px-4 py-1 bg-emerald-500/20 border border-emerald-500/30 backdrop-blur-md rounded-full text-emerald-300 font-medium text-sm tracking-wide mb-4">
-              LEADERS IN ELECTRICAL ENGINEERING
-            </div>
             {/* Removed wording and buttons per user request */}
           </div>
 
