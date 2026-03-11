@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 const Schemes = () => {
   const [schemes, setSchemes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedScheme, setSelectedScheme] = useState(null);
   const API_URL = import.meta.env.VITE_API_URL || 'https://final-backend-0e6r.onrender.com';
 
   useEffect(() => {
@@ -61,15 +62,62 @@ const Schemes = () => {
                 </div>
                 <div className="p-6 flex-1 flex flex-col">
                   <h2 className="text-xl font-bold text-white mb-3 group-hover:text-indigo-400 transition-colors">{scheme.title}</h2>
-                  <p className="text-secondary-400 text-sm leading-relaxed flex-1 text-justify">
-                    {scheme.description}
-                  </p>
-                  <button className="mt-6 w-full py-2 bg-indigo-600/10 text-indigo-400 font-bold rounded-lg border border-indigo-500/20 hover:bg-indigo-600 hover:text-white transition-all">
-                    Apply Now
+                  
+                  <button onClick={() => setSelectedScheme(scheme)} className="mt-auto w-full py-2 bg-indigo-600/10 text-indigo-400 font-bold rounded-lg border border-indigo-500/20 hover:bg-indigo-600 hover:text-white transition-all focus:outline-none">
+                    View Details
                   </button>
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {!loading && schemes.length === 0 && (
+          <div className="text-center py-20 text-secondary-500">
+            No active schemes available right now.
+          </div>
+        )}
+
+        {/* Scheme Details Modal */}
+        {selectedScheme && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setSelectedScheme(null)}></div>
+            <div className="relative bg-secondary-900 border border-secondary-700 rounded-2xl p-8 max-w-2xl w-full shadow-2xl overflow-hidden shadow-indigo-900/20 transition-all animate-fade-in">
+              <button onClick={() => setSelectedScheme(null)} className="absolute top-4 right-4 text-secondary-400 hover:text-white bg-secondary-800 hover:bg-red-500/20 rounded-full w-8 h-8 flex items-center justify-center transition-colors focus:outline-none z-10">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
+              
+              <div className="flex flex-col md:flex-row gap-8 relative z-0">
+                <div className="w-full md:w-5/12 rounded-xl overflow-hidden bg-white p-4 flex items-center justify-center border border-secondary-800">
+                  <img 
+                    src={selectedScheme.image ? (selectedScheme.image.startsWith('http') ? selectedScheme.image : `${API_URL}/${selectedScheme.image.replace(/\\\\/g, '/')}`) : 'https://via.placeholder.com/400x300?text=No+Image'}
+                    alt={selectedScheme.title}
+                    className="w-full h-auto max-h-64 object-contain"
+                    onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/400x300?text=Error'; }}
+                  />
+                  <div className="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                    ACTIVE
+                  </div>
+                </div>
+                
+                <div className="w-full md:w-7/12 flex flex-col pt-2">
+                  <span className="text-sm font-bold tracking-wider text-indigo-400 uppercase mb-2 inline-block">
+                    Special Offer
+                  </span>
+                  <h3 className="text-2xl lg:text-3xl font-bold text-white mb-6 leading-tight">{selectedScheme.title}</h3>
+                  
+                  <div className="bg-secondary-800/60 p-5 rounded-xl border border-secondary-700 flex-1 relative overflow-hidden">
+                    <div className="absolute -right-4 -top-4 text-secondary-700/30">
+                      <svg className="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M14 17h4v2h-4zm0-2h4v-2h-4zm0-4h4V9h-4zm-6 6h4v2H8zm0-2h4v-2H8zm0-4h4V9H8z"/></svg>
+                    </div>
+                    <h4 className="text-secondary-400 text-xs font-bold uppercase tracking-widest mb-3 relative z-10">Scheme Description & Terms</h4>
+                    <p className="text-secondary-100 leading-relaxed text-sm md:text-base relative z-10 whitespace-pre-line text-justify">
+                      {selectedScheme.description || "No specific details provided."}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>
