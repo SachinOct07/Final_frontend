@@ -565,6 +565,9 @@ const AdminDashboard = () => {
                     <p className="text-sm text-secondary-400">Engineering Excellence</p>
                   </div>
                 </div>
+                
+                {success.bill && <div className="mb-6 p-4 bg-green-500/10 text-green-400 rounded-xl border border-green-500/20 flex items-center gap-3"><span className="text-xl">✅</span> Invoice generated successfully!</div>}
+                {error.bill && <div className="mb-6 p-4 bg-red-500/10 text-red-500 rounded-xl border border-red-500/20 flex items-center gap-3"><span className="text-xl">⚠️</span> {error.bill}</div>}
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                   {/* Left Column: Customer Details & Item Selection */}
