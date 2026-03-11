@@ -770,7 +770,7 @@ const AdminDashboard = () => {
                         <div>
                           <h5 className="font-bold text-white text-lg">{b.customerName || `Invoice #${b._id.slice(-6)}`}</h5>
                           <div className="flex items-center gap-3 text-sm text-secondary-400">
-                            <span>{new Date(b.createdAt || Date.now()).toLocaleDateString()}</span>
+                            <span>{new Date(b.createdAt || Date.now()).toLocaleDateString('en-GB')}</span>
                             <span className="w-1 h-1 rounded-full bg-secondary-600"></span>
                             <span>{b.items?.length || 0} Items</span>
                           </div>
@@ -920,7 +920,7 @@ const AdminDashboard = () => {
                     <div>
                       <h1 className="text-4xl font-bold text-gray-800 tracking-wider">INVOICE</h1>
                       <p className="text-sm text-gray-500 mt-2 font-medium">Invoice # {bill._id?.slice(-6).toUpperCase()}</p>
-                      <p className="text-sm text-gray-500 font-medium">Date: {new Date(bill.createdAt || Date.now()).toLocaleDateString()}</p>
+                      <p className="text-sm text-gray-500 font-medium">Date: {new Date(bill.createdAt || Date.now()).toLocaleDateString('en-GB')}</p>
                     </div>
                     <div className="text-right">
                       <h3 className="text-2xl font-bold text-green-700">S.M. Priya Electricals</h3>
