@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import html2pdf from 'html2pdf.js';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -155,6 +156,49 @@ const AdminDashboard = () => {
       console.error(err);
       alert("Failed to update stock");
     }
+  };
+
+  const handleDownloadPDF = (bill) => {
+    const element = document.getElementById(`invoice-ticket-${bill._id}`);
+    if (!element) return;
+    element.style.display = 'block';
+    
+    const opt = {
+      margin: 10,
+      filename: `Invoice_${bill._id.slice(-6).toUpperCase()}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save().then(() => {
+      element.style.display = 'none';
+    });
+  };
+
+  const handlePrint = (bill) => {
+    const element = document.getElementById(`invoice-ticket-${bill._id}`);
+    if (!element) return;
+    const printContent = element.innerHTML;
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Invoice #${bill._id.slice(-6).toUpperCase()}</title>
+          <script src="https://cdn.tailwindcss.com"></script>
+          <style>
+            @media print { body { padding: 0; } }
+            body { padding: 40px; background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+          </style>
+        </head>
+        <body onload="setTimeout(() => { window.print(); window.close(); }, 1500)">
+          <div class="max-w-4xl mx-auto bg-white text-black p-8 font-sans">
+            ${printContent}
+          </div>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
   };
 
   const Icons = {
@@ -732,9 +776,18 @@ const AdminDashboard = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="text-right">
+                      <div className="flex flex-col items-end gap-3 text-right">
                         <p className="font-bold text-2xl text-emerald-400">₹{b.total}</p>
-                        <button className="text-xs text-secondary-500 hover:text-white mt-1 underline">Download PDF</button>
+                        <div className="flex gap-2">
+                          <button onClick={() => handlePrint(b)} className="flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 font-medium px-3 py-1.5 bg-blue-500/10 rounded-md transition-colors border border-blue-500/20">
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
+                            Print
+                          </button>
+                          <button onClick={() => handleDownloadPDF(b)} className="flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 font-medium px-3 py-1.5 bg-emerald-500/10 rounded-md transition-colors border border-emerald-500/20">
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                            PDF
+                          </button>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -857,6 +910,87 @@ const AdminDashboard = () => {
               </div>
             </div>
           )}
+
+          {/* Hidden Print Invoices */}
+          <div style={{ display: 'none' }}>
+            {bills.map(bill => (
+              <div id={`invoice-ticket-${bill._id}`} key={`print-${bill._id}`} className="max-w-4xl bg-white text-black font-sans" style={{ width: '800px', padding: '40px' }}>
+                <div className="flex flex-col gap-6">
+                  <div className="flex justify-between border-b-2 border-gray-300 pb-6">
+                    <div>
+                      <h1 className="text-4xl font-bold text-gray-800 tracking-wider">INVOICE</h1>
+                      <p className="text-sm text-gray-500 mt-2 font-medium">Invoice # {bill._id?.slice(-6).toUpperCase()}</p>
+                      <p className="text-sm text-gray-500 font-medium">Date: {new Date(bill.createdAt || Date.now()).toLocaleDateString()}</p>
+                    </div>
+                    <div className="text-right">
+                      <h3 className="text-2xl font-bold text-green-700">S.M. Priya Electricals</h3>
+                      <p className="text-gray-600 font-medium">Engineering Excellence</p>
+                      <p className="text-gray-500 text-sm mt-1">123 Main Street, City</p>
+                      <p className="text-gray-500 text-sm">+91 98765 43210</p>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-lg font-bold text-gray-700 mb-2 border-b border-gray-200 pb-1 inline-block">Billed To</h4>
+                    <p className="font-bold text-gray-800 text-lg">{bill.customerName}</p>
+                    <p className="text-gray-600 font-medium tracking-wide">Phone: {bill.customerPhone}</p>
+                    {bill.customerAddress && <p className="text-gray-600 mt-1 max-w-sm leading-relaxed">{bill.customerAddress}</p>}
+                  </div>
+
+                  <table className="w-full text-left mt-4 border-collapse">
+                    <thead>
+                      <tr className="bg-gray-100 border-y-2 border-gray-300">
+                        <th className="p-3 font-bold text-gray-700">Item Description</th>
+                        <th className="p-3 font-bold text-center text-gray-700 w-24">Qty</th>
+                        <th className="p-3 font-bold text-right text-gray-700 w-32">Rate</th>
+                        <th className="p-3 font-bold text-right text-gray-700 w-32">Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                      {bill.items?.map((item, idx) => (
+                        <tr key={idx}>
+                          <td className="p-3 text-gray-800 font-medium">{item.productName}</td>
+                          <td className="p-3 text-center text-gray-800">{item.quantity}</td>
+                          <td className="p-3 text-right text-gray-800">₹{Number(item.rate || 0).toFixed(2)}</td>
+                          <td className="p-3 text-right text-gray-800 font-medium">₹{(item.quantity * (item.rate || 0)).toFixed(2)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+
+                  <div className="flex justify-end mt-4">
+                    <div className="w-64 space-y-2">
+                      <div className="flex justify-between py-1 text-sm">
+                        <span className="text-gray-600 font-bold">Subtotal:</span>
+                        <span className="text-gray-800 font-medium">₹{bill.items?.reduce((a, c) => a + c.quantity * (c.rate || 0), 0).toFixed(2)}</span>
+                      </div>
+                      {bill.discount > 0 && (
+                        <div className="flex justify-between py-1 text-sm">
+                          <span className="text-gray-600 font-bold">Discount:</span>
+                          <span className="text-red-500 font-medium">-₹{Number(bill.discount).toFixed(2)}</span>
+                        </div>
+                      )}
+                      {bill.tax > 0 && (
+                        <div className="flex justify-between py-1 text-sm border-b border-gray-200 pb-2">
+                          <span className="text-gray-600 font-bold">Tax:</span>
+                          <span className="text-gray-800 font-medium">₹{Number(bill.tax).toFixed(2)}</span>
+                        </div>
+                      )}
+                      <div className="flex justify-between py-2 pt-3">
+                        <span className="text-xl font-bold text-gray-800">Total:</span>
+                        <span className="text-2xl font-bold text-green-700">₹{Number(bill.total || 0).toFixed(2)}</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-12 text-center text-gray-500 text-sm border-t border-gray-200 pt-6">
+                    <p className="font-bold text-gray-600 mb-1">Thank you for your business!</p>
+                    <p>S.M. Priya Electricals • Hardwares & Irrigation</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </main>
       </div>
 
