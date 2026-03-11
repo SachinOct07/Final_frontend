@@ -166,8 +166,8 @@ const AdminDashboard = () => {
     const opt = {
       margin: 10,
       filename: `Invoice_${bill._id.slice(-6).toUpperCase()}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
+      image: { type: 'jpeg', quality: 1.0 },
+      html2canvas: { scale: 2, useCORS: true, windowWidth: 1024, width: 794 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
@@ -914,7 +914,7 @@ const AdminDashboard = () => {
           {/* Hidden Print Invoices */}
           <div style={{ display: 'none' }}>
             {bills.map(bill => (
-              <div id={`invoice-ticket-${bill._id}`} key={`print-${bill._id}`} className="max-w-4xl bg-white text-black font-sans" style={{ width: '800px', padding: '40px' }}>
+              <div id={`invoice-ticket-${bill._id}`} key={`print-${bill._id}`} className="bg-white text-black font-sans" style={{ width: '794px', minWidth: '794px', padding: '40px', boxSizing: 'border-box' }}>
                 <div className="flex flex-col gap-6">
                   <div className="flex justify-between border-b-2 border-gray-300 pb-6">
                     <div>
