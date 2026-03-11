@@ -32,7 +32,7 @@ const AdminDashboard = () => {
   // Form states
   const [schemeForm, setSchemeForm] = useState({ title: '', description: '', image: null });
   const [projectForm, setProjectForm] = useState({ title: '', description: '', video: null });
-  const [productForm, setProductForm] = useState({ name: '', category: '', rate: '', image: null });
+  const [productForm, setProductForm] = useState({ name: '', category: '', description: '', image: null });
   const [categoryForm, setCategoryForm] = useState({ name: '', type: '' });
   const [slideForm, setSlideForm] = useState({ text: '', image: null });
   const [stockForm, setStockForm] = useState({ productName: '', productId: '', category: '', quantity: '', rate: '' });
@@ -109,7 +109,7 @@ const AdminDashboard = () => {
       // Reset form logic simplistic
       if (type === 'scheme') setSchemeForm({ title: '', description: '', image: null });
       if (type === 'project') setProjectForm({ title: '', description: '', video: null });
-      if (type === 'product') setProductForm({ name: '', category: '', rate: '', image: null });
+      if (type === 'product') setProductForm({ name: '', category: '', description: '', image: null });
       if (type === 'category') setCategoryForm({ name: '', type: '' });
       if (type === 'slide') setSlideForm({ text: '', image: null });
       if (type === 'stock') setStockForm({ productName: '', productId: '', category: '', quantity: '', rate: '' });
@@ -330,7 +330,7 @@ const AdminDashboard = () => {
                         <label className="block text-sm font-medium text-secondary-400 mb-2">Product Name</label>
                         <input type="text" placeholder="e.g. Smart Irrigation Valve" className="input-field bg-secondary-900 border-secondary-700 text-white placeholder-secondary-600 focus:bg-secondary-900 focus:border-primary-500 transition-colors" value={productForm.name} onChange={e => setProductForm({ ...productForm, name: e.target.value })} required />
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 gap-4">
                         <div>
                           <label className="block text-sm font-medium text-secondary-400 mb-2">Category</label>
                           <select className="input-field bg-secondary-900 border-secondary-700 text-white focus:border-primary-500" value={productForm.category} onChange={e => setProductForm({ ...productForm, category: e.target.value })} required>
@@ -339,17 +339,14 @@ const AdminDashboard = () => {
                           </select>
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-secondary-400 mb-2">Rate (₹)</label>
-                          <div className="relative">
-                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-secondary-400 font-bold">₹</span>
-                            <input type="number" placeholder="0.00" className="input-field pl-8 bg-secondary-900 border-secondary-700 text-white placeholder-secondary-600 focus:border-primary-500" value={productForm.rate} onChange={e => setProductForm({ ...productForm, rate: e.target.value })} required />
-                          </div>
+                          <label className="block text-sm font-medium text-secondary-400 mb-2">Description</label>
+                          <textarea placeholder="Enter product description" className="input-field bg-secondary-900 border-secondary-700 text-white placeholder-secondary-600 focus:border-primary-500 h-24 p-3" value={productForm.description} onChange={e => setProductForm({ ...productForm, description: e.target.value })} required />
                         </div>
                       </div>
                     </div>
 
                     {/* Image Upload Area */}
-                    <div className="border-2 border-dashed border-secondary-700 rounded-xl bg-secondary-900/50 hover:bg-blue-500/5 hover:border-blue-500/50 transition-colors flex flex-col items-center justify-center p-6 text-center cursor-pointer relative">
+                    <div className="border-2 border-dashed border-secondary-700 rounded-xl bg-secondary-900/50 hover:bg-blue-500/5 hover:border-blue-500/50 transition-colors flex flex-col items-center justify-center p-6 text-center cursor-pointer relative h-full min-h-[200px]">
                       <input type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={e => setProductForm({ ...productForm, image: e.target.files[0] })} />
                       {productForm.image ? (
                         <div className="text-blue-400 font-medium flex items-center gap-2">
@@ -393,11 +390,11 @@ const AdminDashboard = () => {
                       </div>
                     </div>
                     <div className="p-5">
-                      <div className="flex justify-between items-start mb-2">
-                        <span className="text-xs font-bold tracking-wider text-blue-400 bg-blue-500/10 px-2 py-1 rounded-md uppercase">{p.category?.name || 'Item'}</span>
-                        <span className="text-lg font-bold text-white">₹{p.rate}</span>
+                      <div className="flex flex-col items-start gap-1 mb-2">
+                        <span className="text-xs font-bold tracking-wider text-blue-400 bg-blue-500/10 px-2 py-1 rounded-md uppercase mb-1">{p.category?.name || 'Item'}</span>
+                        <h4 className="font-bold text-lg text-white line-clamp-1" title={p.name}>{p.name}</h4>
+                        <p className="text-secondary-400 text-sm line-clamp-2 mt-1">{p.description}</p>
                       </div>
-                      <h4 className="font-bold text-secondary-200 line-clamp-1" title={p.name}>{p.name}</h4>
                     </div>
                   </div>
                 ))}
