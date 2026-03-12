@@ -9,16 +9,11 @@ const Home = () => {
   const API_URL = import.meta.env.VITE_API_URL || 'https://final-backend-0e6r.onrender.com';
 
   useEffect(() => {
-    // Determine the base URL for the API request
-    // In dev, vite proxy handles /api. In prod, we might need a full URL if not handled by same origin.
-    // For now assuming the proxy or relative path works. 
-    // If the previous code used axios.get('/api/slides'), I'll keep it, 
-    // but the image source in the previous code was http://localhost:5000/ which suggests a hardcoded backend.
-
-    // I will use a relative path for flexibility, but keep the image logic consistent with the user's setup if possible.
-    // However, for a premium look, I'll robustify the image loading.
     axios.get('/api/slides')
-      .then(res => setSlides(Array.isArray(res.data) ? res.data : []))
+      .then(res => {
+        const data = Array.isArray(res.data) ? res.data : (res.data?.slides || []);
+        setSlides(data);
+      })
       .catch(err => {
         console.error("Failed to fetch slides", err);
         setSlides([]);
@@ -39,7 +34,7 @@ const Home = () => {
   const isAdmin = sessionStorage.getItem('token');
 
   return (
-    <div className="min-h-screen bg-secondary-50 font-sans text-secondary-900">
+    <div className="min-h-screen bg-secondary-950 font-sans text-white">
 
       {/* Hero Section */}
       <div className="relative h-screen w-full overflow-hidden">
