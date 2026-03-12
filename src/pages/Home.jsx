@@ -216,8 +216,8 @@ const Home = () => {
             <div>
               <h4 className="text-white text-lg font-bold mb-4">Contact</h4>
               <ul className="space-y-2 text-sm">
-                <li>123 Main Street, City</li>
-                <li>+91 98765 43210</li>
+                <li>248, Thittuparai, Kangayam</li>
+                <li>+91 9750943389</li>
                 <li>info@smpriya.com</li>
               </ul>
             </div>
