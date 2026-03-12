@@ -79,43 +79,8 @@ const Home = () => {
 
         {/* Hero Content */}
         <div className="relative h-full container mx-auto px-6 flex flex-col justify-center max-w-7xl pt-20">
-          <div className="max-w-4xl space-y-8 animate-fade-in">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full shadow-lg backdrop-blur-sm">
-              <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-              <span className="text-emerald-400 text-sm font-bold uppercase tracking-wider">Expert in Irrigation Solutions</span>
-            </div>
-            
-            <div className="space-y-4">
-              <h1 className="text-5xl md:text-8xl font-black text-white leading-[1.1] tracking-tight">
-                Priya <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-primary-500">Electricals</span> <br />
-                <span className="text-4xl md:text-6xl font-bold opacity-90 italic">Hardwares & Irrigation</span>
-              </h1>
-              <p className="text-xl md:text-2xl text-secondary-200 max-w-2xl leading-relaxed font-medium">
-                Premier destination for smart irrigation systems and high-quality electrical hardware. Expert solutions with professional support.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-5 pt-4">
-              <Link to="/products" className="px-10 py-5 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 text-white font-black rounded-2xl transition-all shadow-2xl shadow-primary-900/40 transform hover:-translate-y-1 active:scale-95 text-xl tracking-wide uppercase">
-                Explore Catalog
-              </Link>
-              <Link to="/projects" className="px-10 py-5 bg-white/5 hover:bg-white/10 text-white font-bold rounded-2xl backdrop-blur-xl border border-white/20 transition-all transform hover:-translate-y-1 active:scale-95 text-xl">
-                Our Projects
-              </Link>
-            </div>
-
-            <div className="pt-10 flex items-center gap-6">
-              <div className="flex -space-x-3">
-                {[1,2,3].map(i => <div key={i} className={`w-12 h-12 rounded-full border-4 border-secondary-900 bg-secondary-700 flex items-center justify-center font-bold text-white text-xl shadow-lg bg-gradient-to-tr from-secondary-800 to-secondary-600`}>⭐</div>)}
-              </div>
-              <div>
-                <p className="text-emerald-400 font-black text-3xl flex items-center gap-3">
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                  9819222222
-                </p>
-                <p className="text-secondary-400 text-sm font-bold uppercase tracking-widest mt-1">Available 24/7 for technical support</p>
-              </div>
-            </div>
+          <div className="max-w-3xl space-y-6 animate-fade-in-up">
+            {/* Wording and buttons removed per user request */}
           </div>
 
           {/* Slide Controls - Positioned absolute bottom right */}
