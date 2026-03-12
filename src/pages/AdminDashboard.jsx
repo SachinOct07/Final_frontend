@@ -236,7 +236,7 @@ const AdminDashboard = () => {
   );
 
   return (
-    <div className="flex h-screen bg-secondary-900 font-sans text-white overflow-hidden">
+    <div className="flex flex-col md:flex-row h-screen bg-secondary-900 font-sans text-white overflow-hidden relative">
 
       {/* Sidebar */}
       <aside className={`fixed md:relative inset-y-0 left-0 w-64 bg-secondary-800 text-white transform transition-transform duration-300 ease-in-out z-30 flex flex-col ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0 md:w-20 lg:w-64'} border-r border-secondary-700`}>
@@ -292,7 +292,7 @@ const AdminDashboard = () => {
         </header>
 
         {/* Content Scroll Area */}
-        <main className="flex-1 overflow-auto p-4 md:p-8">
+        <main className="flex-1 overflow-auto p-3 sm:p-4 md:p-8">
           {/* General Success/Error Toasts could go here */}
 
           {activeTab === 'overview' && (
@@ -548,47 +548,43 @@ const AdminDashboard = () => {
                 </form>
               </div>
               <div className="bg-secondary-800 rounded-2xl shadow-sm border border-secondary-700 overflow-hidden">
-                <table className="w-full text-left">
-                  <thead className="bg-secondary-900 border-b border-secondary-700">
-                    <tr>
-                      <th className="p-4 font-semibold text-secondary-400">ID</th>
-                      <th className="p-4 font-semibold text-secondary-400">Name</th>
-                      <th className="p-4 font-semibold text-secondary-400">Category</th>
-                      <th className="p-4 font-semibold text-secondary-400">Stock</th>
-                      <th className="p-4 font-semibold text-secondary-400">Rate</th>
-                      <th className="p-4 font-semibold text-secondary-400">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-secondary-700">
-                    {stocks.map(s => (
-                      <tr key={s._id} className="hover:bg-secondary-700/50 transition-colors">
-                        <td className="p-4 text-sm font-mono text-secondary-400">{s.productId}</td>
-                        <td className="p-4 font-medium text-white">{s.productName}</td>
-                        <td className="p-4 text-secondary-400">{s.category?.name || '-'}</td>
-                        <td className={`p-4 font-bold ${s.quantity < 10 ? 'text-red-400' : 'text-emerald-400'}`}>{s.quantity}</td>
-                        <td className="p-4 text-white">₹{s.rate || 0}</td>
-                        <td className="p-4">
-                          <div className="flex gap-2">
-                            <input type="number" className="w-20 p-1 border border-secondary-600 rounded text-sm bg-secondary-900 text-white" placeholder="New Qty" id={`qty-${s._id}`} />
-                            <input type="number" className="w-20 p-1 border border-secondary-600 rounded text-sm bg-secondary-900 text-white" placeholder="New Rate" id={`rate-${s._id}`} />
-                            <button onClick={() => {
-                              const qty = document.getElementById(`qty-${s._id}`).value;
-                              const rate = document.getElementById(`rate-${s._id}`).value;
-                              if (qty || rate) updateStock(s._id, qty, rate);
-                            }} className="text-blue-400 text-sm hover:underline">Update</button>
-                            <button onClick={() => {
-                              if (window.confirm("Are you sure you want to delete this stock item?")) {
-                                handleDelete(s._id, '/api/stock').catch(err => alert("Delete failed: " + (err.response?.data?.message || err.message)));
-                              }
-                            }} className="text-red-400 hover:text-red-300 ml-2" title="Delete Stock">
-                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                            </button>
-                          </div>
-                        </td>
+              <div className="overflow-x-auto -mx-4 md:mx-0">
+                <div className="inline-block min-w-full align-middle">
+                  <table className="min-w-full border-collapse">
+                    <thead className="bg-secondary-900 border-b border-secondary-700">
+                      <tr>
+                        <th className="p-4 text-left text-xs font-bold uppercase tracking-widest text-secondary-400 whitespace-nowrap">ID</th>
+                        <th className="p-4 text-left text-xs font-bold uppercase tracking-widest text-secondary-400 whitespace-nowrap">Name</th>
+                        <th className="p-4 text-left text-xs font-bold uppercase tracking-widest text-secondary-400 whitespace-nowrap">Category</th>
+                        <th className="p-4 text-left text-xs font-bold uppercase tracking-widest text-secondary-400 whitespace-nowrap">Stock</th>
+                        <th className="p-4 text-left text-xs font-bold uppercase tracking-widest text-secondary-400 whitespace-nowrap">Rate</th>
+                        <th className="p-4 text-left text-xs font-bold uppercase tracking-widest text-secondary-400 whitespace-nowrap">Action</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody className="divide-y divide-secondary-700">
+                      {stocks.map(s => (
+                        <tr key={s._id} className="hover:bg-secondary-700/50 transition-colors">
+                          <td className="p-4 text-sm font-mono text-secondary-400 whitespace-nowrap">{s.productId}</td>
+                          <td className="p-4 font-medium text-white whitespace-nowrap">{s.productName}</td>
+                          <td className="p-4 text-secondary-400 whitespace-nowrap">{s.category?.name || '-'}</td>
+                          <td className={`p-4 font-bold whitespace-nowrap ${s.quantity < 10 ? 'text-red-400' : 'text-emerald-400'}`}>{s.quantity}</td>
+                          <td className="p-4 text-white whitespace-nowrap">₹{s.rate || 0}</td>
+                          <td className="p-4">
+                            <div className="flex gap-2">
+                              <input type="number" className="w-16 md:w-20 p-1 border border-secondary-600 rounded text-sm bg-secondary-900 text-white" placeholder="Qty" id={`qty-${s._id}`} />
+                              <button onClick={() => {
+                                const qty = document.getElementById(`qty-${s._id}`).value;
+                                const rate = document.getElementById(`rate-${s._id}`).value;
+                                if (qty || rate) updateStock(s._id, qty, rate);
+                              }} className="text-blue-400 text-xs md:text-sm hover:underline font-bold">SET</button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
               </div>
             </div>
           )}
@@ -596,14 +592,14 @@ const AdminDashboard = () => {
           {activeTab === 'billing' && (
             <div className="space-y-6">
               <div className="bg-secondary-800 rounded-2xl p-8 shadow-lg border border-secondary-700">
-                <div className="flex justify-between items-start mb-8 border-b border-secondary-700 pb-6">
+                <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 border-b border-secondary-700 pb-6">
                   <div>
-                    <h2 className="text-3xl font-bold text-white tracking-tight">Invoice</h2>
-                    <p className="text-secondary-400 mt-1">Create a formal bill for your customer</p>
+                    <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Invoice</h2>
+                    <p className="text-secondary-400 mt-1 text-sm sm:text-base">Create a formal bill for your customer</p>
                   </div>
-                  <div className="text-right">
-                    <h4 className="text-xl font-bold text-primary-400">S.M. Priya Electricals</h4>
-                    <p className="text-sm text-secondary-400">Engineering Excellence</p>
+                  <div className="text-left sm:text-right w-full sm:w-auto">
+                    <h4 className="text-lg sm:text-xl font-bold text-primary-400">Priya Electricals</h4>
+                    <p className="text-xs sm:text-sm text-secondary-400 uppercase tracking-widest">Engineering Excellence</p>
                   </div>
                 </div>
                 
@@ -757,38 +753,36 @@ const AdminDashboard = () => {
               {/* Recent Bills List */}
               <div className="space-y-4">
                 <h3 className="text-xl font-bold text-white px-2">Recent Invoices</h3>
-                <div className="grid grid-cols-1 gap-4">
-                  {bills.slice().reverse().map(b => (
-                    <div key={b._id} className="bg-secondary-800 p-6 rounded-xl shadow-sm border border-secondary-700 flex justify-between items-center hover:border-primary-500/30 transition-colors group">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-full bg-secondary-900 flex items-center justify-center text-secondary-500 group-hover:text-primary-400 transition-colors">
-                          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                  <div className="grid grid-cols-1 gap-4">
+                    {bills.slice().reverse().map(b => (
+                      <div key={b._id} className="bg-secondary-800 p-5 sm:p-6 rounded-xl shadow-sm border border-secondary-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 hover:border-primary-500/30 transition-colors group">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 rounded-full bg-secondary-900 flex items-center justify-center text-secondary-500 group-hover:text-primary-400 transition-colors shrink-0">
+                            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                          </div>
+                          <div>
+                            <h5 className="font-bold text-white text-lg leading-tight">{b.customerName || `Invoice #${b._id.slice(-6)}`}</h5>
+                            <div className="flex items-center gap-3 text-sm text-secondary-400 mt-1">
+                              <span>{new Date(b.createdAt || Date.now()).toLocaleDateString('en-GB')}</span>
+                              <span className="w-1 h-1 rounded-full bg-secondary-600"></span>
+                              <span>{b.items?.length || 0} Items</span>
+                            </div>
+                          </div>
                         </div>
-                        <div>
-                          <h5 className="font-bold text-white text-lg">{b.customerName || `Invoice #${b._id.slice(-6)}`}</h5>
-                          <div className="flex items-center gap-3 text-sm text-secondary-400">
-                            <span>{new Date(b.createdAt || Date.now()).toLocaleDateString('en-GB')}</span>
-                            <span className="w-1 h-1 rounded-full bg-secondary-600"></span>
-                            <span>{b.items?.length || 0} Items</span>
+                        <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center w-full sm:w-auto border-t sm:border-t-0 border-secondary-700 pt-4 sm:pt-0 gap-3">
+                          <p className="font-bold text-2xl text-emerald-400">₹{b.total}</p>
+                          <div className="flex gap-2">
+                            <button onClick={() => handlePrint(b)} className="flex items-center gap-1 text-[10px] sm:text-xs text-blue-400 hover:text-white font-bold px-3 py-1.5 bg-blue-500/10 hover:bg-blue-600 rounded-md transition-all border border-blue-500/20 active:scale-95">
+                              PRINT
+                            </button>
+                            <button onClick={() => handleDownloadPDF(b)} className="flex items-center gap-1 text-[10px] sm:text-xs text-emerald-400 hover:text-white font-bold px-3 py-1.5 bg-emerald-500/10 hover:bg-emerald-600 rounded-md transition-all border border-emerald-500/20 active:scale-95">
+                              PDF
+                            </button>
                           </div>
                         </div>
                       </div>
-                      <div className="flex flex-col items-end gap-3 text-right">
-                        <p className="font-bold text-2xl text-emerald-400">₹{b.total}</p>
-                        <div className="flex gap-2">
-                          <button onClick={() => handlePrint(b)} className="flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 font-medium px-3 py-1.5 bg-blue-500/10 rounded-md transition-colors border border-blue-500/20">
-                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
-                            Print
-                          </button>
-                          <button onClick={() => handleDownloadPDF(b)} className="flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 font-medium px-3 py-1.5 bg-emerald-500/10 rounded-md transition-colors border border-emerald-500/20">
-                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                            PDF
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
               </div>
             </div>
           )}
