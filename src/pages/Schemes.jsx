@@ -6,6 +6,8 @@ const Schemes = () => {
   const [schemes, setSchemes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedScheme, setSelectedScheme] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  
   const API_URL = import.meta.env.VITE_API_URL || 'https://final-backend-0e6r.onrender.com';
 
   useEffect(() => {
@@ -20,6 +22,12 @@ const Schemes = () => {
       });
   }, []);
 
+  // Filter schemes based on search term
+  const filteredSchemes = schemes.filter(scheme => {
+    return scheme.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+           (scheme.description && scheme.description.toLowerCase().includes(searchTerm.toLowerCase()));
+  });
+
   const isAdmin = sessionStorage.getItem('token');
 
   return (
@@ -32,11 +40,27 @@ const Schemes = () => {
 
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
 
-        {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12">
+        {/* Header and Search */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
           <div>
             <span className="text-indigo-400 font-bold tracking-wider uppercase text-sm">Opportunities</span>
             <h1 className="text-4xl font-bold text-white mt-2">Active Schemes</h1>
+          </div>
+          
+          <div className="w-full md:w-auto">
+            {/* Search Bar */}
+            <div className="relative w-full sm:w-64">
+              <input 
+                type="text" 
+                placeholder="Search schemes..." 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full bg-secondary-900 border border-secondary-700 text-white rounded-lg pl-10 pr-4 py-2.5 focus:outline-none focus:border-indigo-500 transition-colors"
+              />
+              <svg className="absolute left-3 top-3 w-5 h-5 text-secondary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
           </div>
         </div>
 
@@ -47,7 +71,7 @@ const Schemes = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {schemes.map(scheme => (
+            {filteredSchemes.map(scheme => (
               <div key={scheme._id} className="bg-secondary-900 rounded-2xl overflow-hidden shadow-lg border border-secondary-800 hover:border-indigo-500/50 hover:shadow-indigo-500/10 transition-all duration-300 flex flex-col group">
                 <div className="relative h-56 overflow-hidden bg-secondary-950">
                   <img
@@ -72,9 +96,13 @@ const Schemes = () => {
           </div>
         )}
 
-        {!loading && schemes.length === 0 && (
-          <div className="text-center py-20 text-secondary-500">
-            No active schemes available right now.
+        {!loading && filteredSchemes.length === 0 && (
+          <div className="text-center py-20 text-secondary-500 bg-secondary-900/50 rounded-2xl border border-secondary-800">
+            <svg className="mx-auto h-12 w-12 text-secondary-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <h3 className="text-xl font-medium text-white mb-1">No schemes found</h3>
+            <p>Try adjusting your search terms.</p>
           </div>
         )}
 
