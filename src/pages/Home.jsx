@@ -168,7 +168,7 @@ const Home = () => {
             <div className="text-secondary-300 uppercase tracking-widest text-sm">Years Experience</div>
           </div>
           <div>
-            <div className="text-4xl font-bold text-primary-400 mb-1">500+</div>
+            <div className="text-4xl font-bold text-primary-400 mb-1">100+</div>
             <div className="text-secondary-300 uppercase tracking-widest text-sm">Projects Completed</div>
           </div>
           <div>
