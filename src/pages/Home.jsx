@@ -153,9 +153,6 @@ const Home = () => {
                 <p className="text-secondary-400 leading-relaxed">
                   {feature.desc}
                 </p>
-                <Link to="/products" className="inline-flex items-center gap-2 mt-6 text-emerald-400 font-semibold group-hover:translate-x-2 transition-transform">
-                  Learn more <span>→</span>
-                </Link>
               </div>
             ))}
           </div>
